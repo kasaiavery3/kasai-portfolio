@@ -25,6 +25,139 @@
 					</ul>
 				</nav>
 			</header>
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<h1 class="major">Code Snippets</h1>
+					<p>views/comics/index.ejs</p>
+					<pre>
+						<code>
+&lt;form action="/comics" method="POST"&gt;
+	&lt;input type="text" id="mySearch" placeholder="Search.." title="Type in a category"&gt;
+		&lt;/form&gt;
+&lt;div class="container"&gt;
+&lt;% for (let i = 0; i &lt; data.length; i++) { %&gt; 
+	&lt;% let comicBook = data[i]; %&gt;
+	&lt;div class="card" style="width: 18rem;"&gt;
+		&lt;img src="&lt;%= comicBook.image %&gt;" class="card-img-top" alt="..."&gt;
+		&lt;div class="card-body"&gt;
+		&lt;h5 class="card-title"&gt;&lt;%= comicBook.title %&gt;, Issue #&lt;%= comicBook.issueNumber %&gt;&lt;/h5&gt;
+		&lt;p class="card-text"&gt;
+			&lt;div class="accordion-item"&gt;
+				&lt;h2 class="accordion-header" id="panelsStayOpen-headingOne"&gt;
+				&lt;button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"&gt;
+					Description
+				&lt;/button&gt;
+				&lt;/h2&gt;
+				&lt;div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne"&gt;
+				&lt;div class="accordion-body"&gt;
+					&lt;%= comicBook.description %&gt; 
+				&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;/p&gt;
+		&lt;div id="button1"&gt;
+			&lt;form action="/comics/&lt;%= comicBook.id %&gt; " method="POST"&gt;
+			&lt;input type="submit" value="Add to Wishlist" class="btn btn-primary"&gt;
+			&lt;form&gt;
+		&lt;/div&gt;
+		&lt;div id="button2"&gt;
+			&lt;form action="/comics/"&lt;%= comicBook.title %&gt;  method="POST"&gt;
+			&lt;input type="submit" value="Add to Finished" class="btn btn-primary"&gt;
+			&lt;/form&gt;
+		&lt;/div&gt;
+		&lt;div id="button3"&gt;
+			&lt;a href="/comics/&lt;%= comicBook.id %&gt; " class="btn btn-primary"&gt;View&lt;/a&gt;
+		&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;% } %&gt; 
+&lt;/div&gt; 
+						</code>
+					</pre>
+					<p>views/comics/show.ejs</p>
+					<pre>
+						<code>
+&lt;div class="card" style="width: 18rem;"&gt;
+    &lt;img src="&lt;%= comicBook.image %&gt;" class="card-img-top" alt="..."&gt;
+    &lt;div class="card-body"&gt;
+      &lt;h5 class="card-title"&gt;&lt;%= comicBook.title %&gt;, Issue #&lt;%= comicBook.issueNumber %&gt;&lt;/h5&gt;
+      &lt;p class="card-text"&gt;
+        &lt;div class="accordion-item"&gt;
+            &lt;h2 class="accordion-header" id="panelsStayOpen-headingOne"&gt;
+              &lt;button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"&gt;
+                Description
+              &lt;/button&gt;
+            &lt;/h2&gt;
+            &lt;div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne"&gt;
+              &lt;div class="accordion-body"&gt;
+                &lt;%= comicBook.description %&gt; 
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/p&gt;
+      &lt;div id="button1"&gt;
+        &lt;form action="/comics/&lt;%= comicBook.id %&gt; " method="POST"&gt;
+          &lt;input type="submit" value="Add to Wishlist" class="btn btn-primary"&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Add comment:&lt;/h3&gt;
+&lt;form action="/comics/comment" method="post"&gt;
+  &lt;label for="subject"&gt;Subject&lt;/label&gt;
+  &lt;input type="text" name="subject"&gt;
+
+  &lt;label for="body"&gt;Body&lt;/label&gt;
+  &lt;input type="text" name="body"&gt;
+
+  &lt;input type="text" value="&lt;%= comicBook.id %&gt;" name="comicBookId" hidden&gt;
+
+  &lt;input type="submit" value="Add comment"&gt;
+&lt;/form&gt;
+&lt;h3&gt;Comments&lt;/h3&gt;
+&lt;hr&gt;
+&lt;div class="comments" style="text-align: center;"&gt;
+&lt;% for (let i = 0; i &lt; comments.length; i++) { %&gt; 
+  &lt;% let c = comments[i] %&gt; 
+    &lt;h4 style="text-align: center;color: black;"&gt;&lt;%= c.subject %&gt;&lt;/h4&gt;
+    &lt;p style="text-align: center;color: black;"&gt;&lt;%= c.body %&gt;&lt;/p&gt;
+    &lt;p style="text-align: center;color: black;"&gt;Written by: &lt;%= c.User.name %&gt;&lt;/p&gt;
+    &lt;hr&gt;
+&lt;% } %&gt; 
+&lt;/div&gt;
+						</code>
+					</pre>
+					<p>BLOCKERS: <br>
+					- A major blocker I'm experiencing is getting the items within my Wishlist table to display as list items on my Profile page. 
+					The same could be said about the Finished table since I intend to use the same method.
+					</p>
+					<pre>
+						<code>
+&lt;h3&gt;&lt;%= name%&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;%= email %&gt;&lt;/p&gt;
+
+&lt;form method="POST" action="/auth/edit/&lt;%=id%&gt;/?_method=PUT"&gt;
+	&lt;h1&gt;Edit Profile&lt;/h1&gt;
+	&lt;label for="new-email"&gt;Email&lt;/label&gt;
+	&lt;input id="new-email" type="email" name="email" placeholder="&lt;%=email%&gt;"&gt;
+	&lt;br&gt;&lt;/br&gt;
+	&lt;label for="new-name"&gt;Name&lt;/label&gt;
+	&lt;input id="new-name" type="text" name="name" placeholder="&lt;%=name%&gt;"&gt;
+	
+	&lt;input type="submit" value="Update"&gt;
+&lt;/form&gt;
+&lt;br&gt;&lt;/br&gt;
+&lt;h4&gt;Wishlist&lt;/h4&gt;
+&lt;ul&gt;
+	&lt;% for( let i = 0; i &lt; userWishlist.length; i++ ) { %&gt;
+		&lt;li&gt;&lt;%= userWishlist[i].title %&gt; &lt;/li&gt;
+	&lt;% } %&gt;
+&lt;/ul&gt;							
+						</code>
+					</pre>
+				</div>
+			</section>
             <footer id="footer" class="wrapper alt">
 				<div class="inner">
 					<ul class="menu">

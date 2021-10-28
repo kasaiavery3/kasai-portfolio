@@ -1,0 +1,886 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Nook Trading Co.</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="../../index.html" class="title">Kasai Avery</a>
+				<nav>
+					<ul>
+						<li><a href="../../index.html">Home</a></li>
+                        <li><a href="../nook-trading.html">Description</a></li>
+						<li><a href="nook-snippets.html" class="active">Code Snippets</a></li>
+					</ul>
+				</nav>
+			</header>
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<h1 class="major">Code Snippets</h1>
+					<h3>FRONT END</h3>
+					<p>APP FUNCTION</p>
+					<pre>
+						<code>
+function App() {
+	// Set state values
+	const [currentUser, setCurrentUser] = useState("");
+	const [isAuthenticated, setIsAuthenticated] = useState(true);
+	
+	useEffect(() =&gt; {
+		let token;
+	
+		if (!localStorage.getItem("jwtToken")) {
+		setIsAuthenticated(false);
+		console.log("====&gt; Authenticated is now FALSE");
+		} else {
+		token = jwt_decode(localStorage.getItem("jwtToken"));
+		setAuthToken(localStorage.getItem("jwtToken"));
+		setCurrentUser(token);
+		}
+	}, []);
+	
+	const nowCurrentUser = (userData) =&gt; {
+		console.log("===&gt; nowCurrent is here.");
+		setCurrentUser(userData);
+		setIsAuthenticated(true);
+	};
+	
+	const handleLogout = () =&gt; {
+		if (localStorage.getItem("jwtToken")) {
+		// remove token for localStorage
+		localStorage.removeItem("jwtToken");
+		setCurrentUser(null);
+		setIsAuthenticated(false);
+		}
+	};
+	return (
+		&lt;div&gt;
+		&lt;SideBar /&gt;
+		&lt;SideNav handleLogout={handleLogout} isAuth={isAuthenticated} /&gt;
+			&lt;Switch&gt;
+			&lt;Route exact path="/" component={Home} /&gt;
+			&lt;PrivateRoute 
+			path="/profile" 
+			component={Profile} 
+			user={currentUser} 
+			handleLogout={handleLogout} 
+			/&gt;
+			&lt;Route 
+			path="/login" 
+			render={(props) =&gt; (
+				&lt;Login 
+				{...props} 
+				nowCurrentUser={nowCurrentUser}
+				setIsAuthenticated={setIsAuthenticated}
+				user={currentUser} 
+				/&gt;
+			)}
+			/&gt;
+			{/* &lt;PrivateRoute 
+			path="/checkout/:id"
+			component={Checkout}
+			setCheckout={setCheckout}
+			setModelOpen={setModelOpen}
+			setReceipt={setReceipt}
+			/&gt;
+			&lt;Route exact path="/" render={props =&gt; {
+			return (
+				&lt;ProductContainer 
+				{...props}
+				addtoCart={addtoCart}
+				setCheckout={setCheckout}
+				/&gt;
+			)
+			}}/&gt; */}
+			&lt;Route path="/signup" component={Signup} /&gt;
+			&lt;Route path="/cart" component={Cart} /&gt;
+			&lt;Route path="/checkout" component={Checkout} /&gt;
+			&lt;Route path="/items/:id" component={ViewItem} /&gt;
+			&lt;Route path="/items" component={Items} /&gt;
+		&lt;/Switch&gt;
+		&lt;Footer /&gt;
+		&lt;/div&gt;
+	)
+	}
+						</code>
+					</pre>
+					<p>COMPONENTS</p>
+					<p>Side Nav component</p>
+					<pre>
+						<code>
+const SideNav = (props) =&gt; {
+	return (
+		&lt;div className='sidenav'&gt;
+			&lt;Link to="/" className='logo'&gt;&lt;h2&gt;Nook Trading Co.&lt;/h2&gt;&lt;/Link&gt;
+			&lt;Link to="/" className="btn btn-primary"&gt;Home&lt;/Link&gt;
+			&lt;Link to="/profile" className="btn btn-primary"&gt;Profile&lt;/Link&gt;
+			&lt;Link to="/items" className='btn btn-primary items'&gt;All Items&lt;/Link&gt;
+			{
+				props.isAuth ? 
+				&lt;Link to="/login" className="btn btn-primary"&gt;Log In&lt;/Link&gt;
+				:
+				&lt;div className="btn btn-primary logout" onClick={props.handleLogout}&gt;
+					Logout
+				&lt;/div&gt;
+			}
+			&lt;Link to="/cart" className='cart-btn'&gt;
+				&lt;FontAwesomeIcon icon={faShoppingCart} /&gt;
+			&lt;/Link&gt;
+			{/* { 
+			props.isAuth 
+			?  &lt;div&gt;
+				&lt;Link to="/profile" className="btn btn-primary"&gt;Profile&lt;/Link&gt;
+				&lt;Link onClick={props.handleLogout} /&gt;
+				&lt;Link to="/cart" className='cart-btn'&gt;
+					&lt;FontAwesomeIcon icon={faShoppingCart} /&gt;
+				&lt;/Link&gt;
+			&lt;/div&gt;
+			: &lt;div&gt;
+				&lt;Link to="/login" className="btn btn-primary"&gt;Log In&lt;/Link&gt;
+			&lt;/div&gt;
+} */}
+		&lt;/div&gt;
+	)
+};
+						</code>
+					</pre>
+					<p>Best Sellers component</p>
+					<pre>
+						<code>
+function BestSell() {
+	return (
+		&lt;div className='bestsell'&gt;
+			&lt;h3&gt;Best Sellers!&lt;/h3&gt;
+			&lt;Container&gt;
+				&lt;Row&gt;
+					&lt;Col sm className='item'&gt;
+						&lt;NavLink to={`items/110`}&gt;
+							&lt;Image src="https://acnhapi.com/v1/images/furniture/FtrCuteBedW_Remake_0_0" /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+					&lt;Col sm className='item'&gt;
+						&lt;NavLink to={`items/443`}&gt;
+							&lt;Image src="https://acnhapi.com/v1/images/furniture/FtrLampSoftcream_Remake_0_0" /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+					&lt;Col sm className='item'&gt;
+						&lt;NavLink to={`items/364`}&gt;
+							&lt;Image src="https://acnhapi.com/v1/images/furniture/FtrPinball_Remake_0_0" /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+					&lt;Col sm className='item'&gt;
+						&lt;NavLink to={`items/170`}&gt;
+							&lt;Image src="https://acnhapi.com/v1/images/furniture/FtrGrandlight_Remake_0_0" /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+					&lt;Col sm className='item'&gt;
+						&lt;NavLink to={`items/112`}&gt;
+							&lt;Image src="https://acnhapi.com/v1/images/furniture/FtrCuteWorkbench_Remake_0_0" /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+					&lt;Col sm className='scrollbutton'&gt;
+						{/* &lt;Button className='scroll' /&gt; */}
+						&lt;FontAwesomeIcon icon={faArrowRight}/&gt;
+					&lt;/Col&gt;
+				&lt;/Row&gt;
+			&lt;/Container&gt;
+		&lt;/div&gt;
+	)
+}
+						</code>
+					</pre>
+					<p>Item component</p>
+					<pre>
+						<code>
+const Item = (props) =&gt; {
+	return (
+		&lt;div className="view-item container"&gt;
+			&lt;div&gt;
+				&lt;Row&gt;
+					&lt;Col&gt;
+						&lt;Col sm className="view-item item"&gt;
+							&lt;Image className="view-item image" src={props.itemData.image} /&gt;
+						&lt;/Col&gt;
+					&lt;/Col&gt;
+					&lt;Col&gt;
+						&lt;h2 className="view-item h2"&gt;{props.itemData.name}&lt;/h2&gt;
+						&lt;p className="view-item p"&gt;From {props.itemData.shop}&lt;/p&gt;
+						&lt;Col&gt;
+							&lt;div className="btn btn-primary"&gt;
+								&lt;Link to="/cart" className="purchase"&gt;Purchase&lt;/Link&gt;
+							&lt;/div&gt;
+							&lt;div className="btn btn-primary"&gt;Add to Cart&lt;/div&gt;
+						&lt;/Col&gt;
+					&lt;/Col&gt;
+				&lt;/Row&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	)
+}
+						</code>
+					</pre>
+					<p>PAGES</p>
+					<p>All Items page</p>
+					<pre>
+						<code>
+const Items = () =&gt; {
+	const [allItems, setItems] = useState([])
+
+	let url = "items/"
+
+	useEffect(() =&gt; {
+		axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+		axios.get(url).then((response) =&gt; {
+			// console.log(response.data.items)
+			setItems(response.data.items)
+		})
+	}, [])
+
+	function allItemsList(n, response) {
+		let itemArr = [];
+		for (let i = 0; i &lt; n; i++) {
+			if (allItems[i]["image"]) {
+				itemArr.push(
+					&lt;Col sm className="item" key={allItems[i]["id"]}&gt;
+						&lt;NavLink to={`items/${allItems[i].id}`}&gt;
+							&lt;Image src={allItems[i]["image"]} /&gt;
+						&lt;/NavLink&gt;
+					&lt;/Col&gt;
+				)
+			}
+		}
+		return itemArr;
+	}
+
+	let displayAllItemsList = allItems.length ? (
+		allItemsList(allItems.length) 
+	) : (
+		&lt;div className="loading-screen"&gt;
+				&lt;p&gt;Loading...&lt;/p&gt;
+		&lt;/div&gt;
+	);
+
+	return (
+		&lt;div&gt;
+			&lt;Row className="allitems"&gt;{displayAllItemsList}&lt;/Row&gt;
+			&lt;SideNav /&gt;
+			&lt;SideBar /&gt;
+			&lt;Footer /&gt;
+			&lt;div className="backdrop"&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	)
+}
+						</code>
+					</pre>
+					<p>Login page</p>
+					<pre>
+						<code>
+const Login = (props) =&gt; {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const handleEmail = (e) =&gt; {
+		setEmail(e.target.value);
+	}
+
+	const handlePassword = (e) =&gt; {
+		setPassword(e.target.value);
+	}
+
+	const handleSubmit = (e) =&gt; {
+		e.preventDefault();
+		const userData = { email, password };
+
+		axios.post(`${REACT_APP_SERVER_URL}/auth/login`, userData)
+		.then(response =&gt; {
+			const { token } = response.data;
+			// save token to localStorage
+			localStorage.setItem('jwtToken', token);
+			// set token to headers
+			setAuthToken(token);
+			// decode token to get the user data
+			const decoded = jwt_decode(token);
+			// set the current user
+			props.nowCurrentUser(decoded); // funnction passed down as props.
+		})
+		.catch(error =&gt; {
+			console.log('===&gt; Error on login', error);
+			alert('Either email or password is incorrect. Please try again');
+		});
+	}
+
+	if (props.user) return &lt;Redirect to="/profile" /&gt; // double check
+
+	return (
+		&lt;div className="row mt-4"&gt;
+			&lt;div className="col-md-7 offset-md-3"&gt;
+				&lt;div className="card card-body"&gt;
+					&lt;h2 className="py-2"&gt;Login&lt;/h2&gt;
+					&lt;form onSubmit={handleSubmit}&gt;
+						&lt;div className="form-group"&gt;
+							&lt;label htmlFor="email"&gt;Email&lt;/label&gt;
+							&lt;input type="email" name="email" value={email} onChange={handleEmail} className="form-control" /&gt;
+						&lt;/div&gt;
+						&lt;div className="form-group"&gt;
+							&lt;label htmlFor="password"&gt;Password&lt;/label&gt;
+							&lt;input type="password" name="password" value={password} onChange={handlePassword} className="form-control" /&gt;
+						&lt;/div&gt;
+						&lt;button type="submit" className="btn btn-primary float-right"&gt;Submit&lt;/button&gt;
+						&lt;p className='donthave'&gt;Don't have an account? &lt;a className='donthavea' href='/signup'&gt;Sign up&lt;/a&gt;!&lt;/p&gt;
+					&lt;/form&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div className='backdrop'&gt;&lt;/div&gt;
+			&lt;Footer /&gt;
+		&lt;/div&gt;
+	);
+}
+						</code>
+					</pre>
+					<p>Checkout page</p>
+					<pre>
+						<code>
+function Checkout() {
+	return (
+		&lt;div className="checkout div"&gt;
+			&lt;Form className="checkout"&gt;
+				&lt;Form.Label&gt;&lt;h3 className="checkout head"&gt;Checkout&lt;/h3&gt;&lt;/Form.Label&gt;
+				&lt;Form.Group&gt;
+					&lt;Form.Label&gt;&lt;h4 className="checkout head-2"&gt;Shipping Information&lt;/h4&gt;&lt;/Form.Label&gt;
+					&lt;Form.Label&gt;&lt;h4 className="checkout head-2 contact"&gt;Contact Information&lt;/h4&gt;&lt;/Form.Label&gt;
+				&lt;/Form.Group&gt;
+				&lt;Form.Group className="mb-3"&gt;
+					&lt;Form.Label&gt;First Name&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="Tom" /&gt;
+					{/* &lt;Form.Group className="contact"&gt;
+						&lt;Form.Label className="contact"&gt;Zip Code&lt;/Form.Label&gt;
+						&lt;Form.Control type="text" placeholder="24680" className="contact" /&gt;
+					&lt;/Form.Group&gt; */}
+				&lt;/Form.Group&gt;
+				&lt;Form.Group className="mb-3"&gt;
+					&lt;Form.Label&gt;Last Name&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="Nook" /&gt;
+				&lt;/Form.Group&gt;
+				&lt;Form.Group className="mb-3"&gt;
+					&lt;Form.Label&gt;Address&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="1234 Sesame St" /&gt;
+					&lt;Form.Control type="text" placeholder="Apt #, Suite, Floor(optional)" /&gt;
+				&lt;/Form.Group&gt;
+				&lt;Form.Group className="mb-3"&gt;
+					&lt;Form.Label&gt;City&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="Konoha" /&gt;
+				&lt;/Form.Group&gt;
+				&lt;Form.Group&gt;
+					&lt;Form.Label&gt;State&lt;/Form.Label&gt;
+					&lt;FloatingLabel controlId="floatingSelectGrid"&gt;
+						&lt;Form.Select aria-label="Floating label select example" className="form control"&gt;
+							&lt;option&gt;Select&lt;/option&gt;
+							&lt;option value="1"&gt;Alabama&lt;/option&gt;
+							&lt;option value="2"&gt;Alaska&lt;/option&gt;
+							&lt;option value="3"&gt;Arizona&lt;/option&gt;
+							&lt;option value="4"&gt;Arkansas&lt;/option&gt;
+							&lt;option value="5"&gt;California&lt;/option&gt;
+							&lt;option value="6"&gt;Colorado&lt;/option&gt;
+							&lt;option value="7"&gt;Connecticut&lt;/option&gt;
+							&lt;option value="8"&gt;Delaware&lt;/option&gt;
+							&lt;option value="9"&gt;Florida&lt;/option&gt;
+							&lt;option value="10"&gt;Georgia&lt;/option&gt;
+							&lt;option value="11"&gt;Hawaii&lt;/option&gt;
+							&lt;option value="12"&gt;Idaho&lt;/option&gt;
+							&lt;option value="13"&gt;Illinois&lt;/option&gt;
+							&lt;option value="14"&gt;Indiana&lt;/option&gt;
+							&lt;option value="15"&gt;Iowa&lt;/option&gt;
+							&lt;option value="16"&gt;Kansas&lt;/option&gt;
+							&lt;option value="17"&gt;Kentucky&lt;/option&gt;
+							&lt;option value="18"&gt;Louisana&lt;/option&gt;
+							&lt;option value="19"&gt;Maine&lt;/option&gt;
+							&lt;option value="20"&gt;Maryland&lt;/option&gt;
+							&lt;option value="21"&gt;Massachusetts&lt;/option&gt;
+							&lt;option value="22"&gt;Michigan&lt;/option&gt;
+							&lt;option value="23"&gt;Minnesota&lt;/option&gt;
+							&lt;option value="24"&gt;Mississippi&lt;/option&gt;
+							&lt;option value="25"&gt;Missouri&lt;/option&gt;
+							&lt;option value="26"&gt;Montana&lt;/option&gt;
+							&lt;option value="27"&gt;Nebraska&lt;/option&gt;
+							&lt;option value="28"&gt;Nevada&lt;/option&gt;
+							&lt;option value="29"&gt;New Hampshire&lt;/option&gt;
+							&lt;option value="30"&gt;New Jersey&lt;/option&gt;
+							&lt;option value="31"&gt;New Mexico&lt;/option&gt;
+							&lt;option value="32"&gt;New York&lt;/option&gt;
+							&lt;option value="33"&gt;North Carolina&lt;/option&gt;
+							&lt;option value="34"&gt;North Dakota&lt;/option&gt;
+							&lt;option value="35"&gt;Ohio&lt;/option&gt;
+							&lt;option value="36"&gt;Oklahoma&lt;/option&gt;
+							&lt;option value="37"&gt;Oregon&lt;/option&gt;
+							&lt;option value="38"&gt;Pennsylvania&lt;/option&gt;
+							&lt;option value="39"&gt;Rhode Island&lt;/option&gt;
+							&lt;option value="40"&gt;South Carolina&lt;/option&gt;
+							&lt;option value="41"&gt;South Dakota&lt;/option&gt;
+							&lt;option value="42"&gt;Tennessee&lt;/option&gt;
+							&lt;option value="43"&gt;Texas&lt;/option&gt;
+							&lt;option value="44"&gt;Utah&lt;/option&gt;
+							&lt;option value="45"&gt;Vermont&lt;/option&gt;
+							&lt;option value="46"&gt;Virginia&lt;/option&gt;
+							&lt;option value="47"&gt;Washington&lt;/option&gt;
+							&lt;option value="48"&gt;West Virginia&lt;/option&gt;
+							&lt;option value="49"&gt;Wisconsin&lt;/option&gt;
+							&lt;option value="50"&gt;Wyoming&lt;/option&gt;
+						&lt;/Form.Select&gt;
+					&lt;/FloatingLabel&gt;
+					&lt;Form.Label&gt;Zip Code&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="24680" /&gt;
+				&lt;/Form.Group&gt;
+				{/* &lt;Form.Group&gt;
+					&lt;Form.Label&gt;&lt;h4 className="checkout head-2"&gt;Contact Information&lt;/h4&gt;&lt;/Form.Label&gt;
+				&lt;/Form.Group&gt;
+				&lt;Form.Group&gt;
+					&lt;Form.Label&gt;Zip Code&lt;/Form.Label&gt;
+					&lt;Form.Control type="text" placeholder="24680" /&gt;
+				&lt;/Form.Group&gt; */}
+			&lt;/Form&gt;
+			&lt;SideNav /&gt;
+			&lt;SideBar /&gt;
+			&lt;Footer /&gt;
+			&lt;div className="backdrop"&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	)
+}
+						</code>
+					</pre>
+					<p>View Item page</p>
+					<pre>
+						<code>
+const ViewItem = (props) =&gt; {
+	const pageUrl = window.location.href
+	
+	const id = props.match.params.id;
+	
+
+	const [item, setItem] = useState({});
+
+	let url = "items/" + id;
+	// console.log(id);
+	// console.log("url", url);
+
+	useEffect(() =&gt; {
+		axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+		axios.get(url).then((response) =&gt; {
+			setItem(response.data.item);
+				console.log("Testing data", response.data);
+			});
+	}, []);
+
+	// console.log("STATE", allItems[0]);
+
+	let displayItem = item ? (
+		&lt;Item itemData={item}/&gt;
+	) : (
+		&lt;p&gt;Loading...&lt;/p&gt;
+	);
+
+	return (
+		&lt;div&gt;
+			{displayItem}
+			{/* &lt;Item /&gt; */}
+			{/* &lt;SideNav /&gt; */}
+			&lt;SideBar /&gt;
+			&lt;div className="backdrop view-item"&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	)
+}
+						</code>
+					</pre>
+					<h3>BACK END</h3>
+					<p>Fetch Data function</p>
+					<pre>
+						<code>
+const axios = require('axios');
+
+const fetchData = async () =&gt; {
+	try {
+		const {data} = await axios.get('https://acnhapi.com/v1/houseware');
+		let itemResults = [];
+	
+		const items = Object.keys(data);
+
+		items.forEach(element =&gt; {
+		const item = data[element][0]
+		const itemData = {};
+		// console.log(item.name);
+		let name = item.name['name-USen']
+		let price = item['buy-price']
+		let shop = item['source']
+		let image = item['image_uri']
+		// console.log(image)
+		itemData.name = name;
+		itemData.price = price;
+		itemData.shop = shop;
+		itemData.image = image;
+		console.log(itemData)
+		itemResults.push(itemData);
+		})
+		console.log(itemResults)
+
+		// items.forEach(item =&gt; {
+		//   console.log(data[item])
+		// })
+
+	// data.forEach(item =&gt; {
+	//   console.log('We have entered the forEach block');
+	// })
+
+		// for (let i = 0; i &lt; response.data.length; i++) {
+		//   console.log('Hello we are in the for loop');
+		//   const item = response.data[i];
+
+		//   console.log(item.name);
+		// }
+	} catch (error) {
+		console.log(error)
+	}
+	}
+
+	fetchData();
+						</code>
+					</pre>
+					<p>CONTROLLERS</p>
+					<p>Item controller</p>
+					<pre>
+						<code>
+const express = require('express');
+const router = express.Router();
+
+const { User, Item } = require('../models');
+
+
+// Get information on all items
+router.get('/', async (req, res) =&gt; {
+	try {
+		const allItems = await Item.findAll({});
+		return res.status(200).json({message: "Success", items: allItems});
+
+	} catch (error) {
+		console.log(error);
+		res.status(400).json({message: 'There was an error, please try again'});
+	}
+})
+
+// Get information on a specific item using its id
+router.get('/:id', async (req, res) =&gt; {
+	try {
+		const oneItem = await Item.findOne({
+			where: { id: req.params.id }
+		});
+		return res.status(200).json({message: "Success", item: oneItem})
+	} catch (error) {
+		console.log(error)
+		res.status(400).json({message: 'There was an error, please try again'})
+	}
+})
+
+module.exports = router;
+						</code>
+					</pre>
+					<p>Auth controller</p>
+					<pre>
+						<code>
+require('dotenv').config();
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'test jwt secret';
+const passport = require('passport');
+
+const {User} = require('../models');
+
+router.post('/login', async (req, res) =&gt; {
+  try {
+    console.log('===&gt; Inside of /login');
+    const foundUser = await User.findOne({
+      where: {email: req.body.email}
+    });
+
+    if (foundUser) {
+      let isMatch = await bcrypt.compare(req.body.password, foundUser.password);
+      console.log('Match User', isMatch);
+
+      if (isMatch) {
+        const payload = {
+          id: foundUser.id,
+          email: foundUser.email,
+          name: foundUser.name
+        }
+
+        jwt.sign(payload, JWT_SECRET, {expiresIn: 3600}, (err, token) =&gt; {
+          if (err) {
+            return res.status(400).json({message: 'Session has ended, please log in again'});
+          }
+          const legit = jwt.verify(token, JWT_SECRET, {expiresIn: 60});
+          console.log('==&gt; legit');
+          console.log(legit);
+          res.json({success: true, token: `Bearer ${token}`, userData: legit})
+        })
+      } else {
+        return res.status(400).json({message: 'Email or Password is incorrect'});
+      } 
+    } else {
+      return res.status(400).json({message: 'User not found'});
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: "There was an error, please try again"});
+  }
+})
+
+router.post('/signup', async (req, res) =&gt; {
+    // we now have access to the user info (req.body);
+    console.log(req.body);
+    const { email, name, password } = req.body; // goes and us access to whatever key/value inside of the object
+    try {
+      const foundUser = await User.findOne({
+        where: {email}
+      });
+
+      if (foundUser) {
+        console.log(foundUser);
+        return res.status(400).json({message: 'Email already exists'});
+      } else {
+        const userData = {
+          name,
+          email
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+        userData.password = hash;
+
+        const createdUser = User.create(userData);
+        return res.json({createdUser});
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        message: 'There was an error, please try again'
+      })
+    }
+});
+  
+router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res) =&gt; {
+  console.log('Inside /profile');
+  console.log('===&gt; user', req.user);
+
+  const {id, name, email} = req.user;
+  return res.json({id, name, email});
+})
+
+module.exports = router;
+						</code>
+					</pre>
+					<p>MODELS</p>
+					<p>User model</p>
+					<pre>
+						<code>
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) =&gt; {
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      models.User.belongsToMany(models.Item, {through: 'cart', foreignKey: 'userId'});
+      models.User.hasMany(models.Review, {foriegnKey: 'userId'});
+    }
+  };
+  User.init({
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
+  return User;
+};
+						</code>
+					</pre>
+					<p>Item model</p>
+					<pre>
+						<code>
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) =&gt; {
+  class Item extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+      models.Item.belongsToMany(models.User, {through: 'cart', foreignKey: 'itemId'})
+    }
+  };
+  Item.init({
+    name: DataTypes.STRING,
+    price: DataTypes.STRING,
+    shop: DataTypes.STRING,
+    image: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Item',
+  });
+  return Item;
+};
+						</code>
+					</pre>
+					<p>Cart model</p>
+					<pre>
+						<code>
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) =&gt; {
+  class Cart extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  };
+  Cart.init({
+    userId: DataTypes.INTEGER,
+    itemId: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'Cart',
+  });
+  return Cart;
+};
+						</code>
+					</pre>
+					<p>SEEDERS</p>
+					<p>Items</p>
+					<pre>
+						<code>
+'use strict';
+const axios = require('axios');
+const fetchData = async () =&gt; {
+  try {
+    const {data} = await axios.get('https://acnhapi.com/v1/houseware');
+    let itemResults = [];
+  
+    const items = Object.keys(data);
+
+    items.forEach(element =&gt; {
+      const item = data[element][0]
+      const itemData = {};
+      // console.log(item.name);
+      let name = item.name['name-USen']
+      let price = item['buy-price']
+      let shop = item['source']
+      let image = item['image_uri']
+      // console.log(image)
+      itemData.name = name;
+      itemData.price = price;
+      itemData.shop = shop;
+      itemData.image = image;
+      itemData.createdAt = new Date();
+      itemData.updatedAt = new Date();
+      // console.log(itemData)
+      itemResults.push(itemData);
+      // console.log(itemResults)
+    })
+    return itemResults;
+
+    // items.forEach(item =&gt; {
+    //   console.log(data[item])
+    // })
+
+  // data.forEach(item =&gt; {
+  //   console.log('We have entered the forEach block');
+  // })
+
+    // for (let i = 0; i &lt; response.data.length; i++) {
+    //   console.log('Hello we are in the for loop');
+    //   const item = response.data[i];
+
+    //   console.log(item.name);
+    // }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = {
+  up: async (queryInterface, Sequelize) =&gt; {
+    /**
+     * Add seed commands here.
+     *
+     * Example:
+     * await queryInterface.bulkInsert('People', [{
+     *   name: 'John Doe',
+     *   isBetaMember: false
+     * }], {});
+    */
+
+    const items = await fetchData();
+    await queryInterface.bulkInsert('Items', items, {});
+  },
+
+  down: async (queryInterface, Sequelize) =&gt; {
+    /**
+     * Add commands to revert seed here.
+     *
+     * Example:
+     * await queryInterface.bulkDelete('People', null, {});
+     */
+    await queryInterface.bulkDelete('Items', null, {});
+  }
+};
+						</code>
+					</pre>
+				</div>
+			</section>
+            <footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>

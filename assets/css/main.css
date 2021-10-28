@@ -215,10 +215,11 @@ input, select, textarea {
 		}
 
 			h1.major:after {
-				background-image: -moz-linear-gradient(to right, #5e42a6, #b74e91);
+				background-color: #ffffff;
+				/* background-image: -moz-linear-gradient(to right, #5e42a6, #b74e91);
 				background-image: -webkit-linear-gradient(to right, #5e42a6, #b74e91);
 				background-image: -ms-linear-gradient(to right, #5e42a6, #b74e91);
-				background-image: linear-gradient(to right, #5e42a6, #b74e91);
+				background-image: linear-gradient(to right, #5e42a6, #b74e91); */
 				-moz-transition: max-width 0.2s ease;
 				-webkit-transition: max-width 0.2s ease;
 				-ms-transition: max-width 0.2s ease;
@@ -2631,6 +2632,18 @@ input, select, textarea {
 				width: 100%;
 			}
 
+	.image1 {
+		/* background-color: white; */
+		width: 369px;
+		padding-right: 19px;
+	}
+
+	.image1 img {
+		width: 390px;
+		/* height: 369px; */
+		height: 102%;
+	}
+
 /* List */
 
 	ol {
@@ -2885,7 +2898,7 @@ input, select, textarea {
 	}
 
 	header p {
-		color: rgba(255, 255, 255, 0.35);
+		color: rgba(255, 255, 255, 0.5);
 		position: relative;
 		margin: 0 0 1.5em 0;
 	}
@@ -3388,7 +3401,7 @@ input, select, textarea {
 		display: -webkit-flex;
 		display: -ms-flex;
 		display: flex;
-		background-color: #5e42a6;
+		background-color: #00158a;
 		cursor: default;
 		padding: 1.75em 2em;
 	}
@@ -3508,6 +3521,10 @@ input, select, textarea {
 	}
 
 /* Footer */
+
+	#footer.wrapper.alt {
+		background-color: #00158a;
+	}
 
 	#sidebar + #wrapper + #footer {
 		margin-left: 18em;

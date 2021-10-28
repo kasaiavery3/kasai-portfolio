@@ -25,7 +25,470 @@
 					</ul>
 				</nav>
 			</header>
-			<code>Snippet</code>
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<h1 class="major">Code Snippets</h1>
+					<p>ENTITIES</p>
+					<p>Player class</p>
+					<pre>
+						<code>
+class Player {
+	constructor(x, y, color, width, height) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.width = width;
+		this.height = height;
+		this.alive = true;
+		this.currentLocation = 2;
+		this.previousLocation = null;
+		this.triforcePiece = 0;
+		this.reset = false;
+		this.bomb = 0;
+		this.ocarina = 0;
+		this.goronSpice = 0;
+		this.zoraSpringWater = 0;
+		
+
+
+		this.render = () =&gt; {
+			ctx.fillStyle = this.color
+			ctx.fillRect(this.x, this.y, this.width, this.height)
+		}
+	}
+}
+						</code>
+					</pre>
+					<p>Green Square class</p>
+					<pre>
+						<code>
+class GreenSquare {
+	constructor(x, y, color, width, height) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.width = width;
+		this.height = height;
+
+		this.render = () =&gt; {
+			ctx.fillStyle = this.color
+			ctx.fillRect(this.x, this.y, this.width, this.height)
+		}
+	}
+}
+						</code>
+					</pre>
+					<p>Brown Bridge class</p>
+					<pre>
+						<code>
+class BrownBridge {
+	constructor(x, y, color, width, height) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.width = width;
+		this.height = height;
+
+		this.render = () =&gt; {
+			ctx.fillStyle = this.color
+			ctx.fillRect(this.x, this.y, this.width, this.height)
+		}
+	}
+}
+						</code>
+					</pre>
+					<p>Skull Kid class</p>
+					<pre>
+						<code>
+class SkullKid {
+	constructor(x, y, color, width, height) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.width = width;
+		this.height = height;
+
+		this.render = () =&gt; {
+			ctx.fillStyle = this.color
+			ctx.fillRect(this.x, this.y, this.width, this.height)
+		}
+	}
+}
+						</code>
+					</pre>
+					<p>Triforce Piece class</p>
+					<pre>
+						<code>
+class TriforcePiece {
+	constructor(x, y, color, width, height) {
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.width = width;
+		this.height = height;
+
+		this.render = () =&gt; {
+			ctx.fillStyle = this.color
+			ctx.fillRect(this.x, this.y, this.width, this.height)
+		}
+	}
+}
+						</code>
+					</pre>
+					<p>GUI</p>
+					<p>Add New Scrub function</p>
+					<pre>
+						<code>
+function addNewScrub() {
+	dekuScrub.alive = false;
+	setTimeout(() =&gt; {
+		let x = Math.floor(Math.random() * game.width) - 40;
+		let y = Math.floor(Math.random() * game.height) - 80;
+		shrek = new DekuScrub(x, y, "#bada55", 40, 80);
+	}, 1000);
+	return true;
+}
+						</code>
+					</pre>
+					<p>Render Squares function</p>
+					<pre>
+						<code>
+function renderSquares () {
+	const greenSquares = [
+	{
+		x: 125,
+		y: 125,
+		color: '#367b35',
+		width: 30,
+		height: 20,
+	},
+	{ 
+		x: 82.5,
+		y: 125,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 82.5,
+		y: 97.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 82.5,
+		y: 70,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 82.5,
+		y: 42.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 82.5,
+		y: 15,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 125,
+		y: 97.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 125,
+		y: 70,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 125,
+		y: 42.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 125,
+		y: 15,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 167.5,
+		y: 97.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 167.5,
+		y: 70,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 167.5,
+		y: 42.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 167.5,
+		y: 15,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 210,
+		y: 97.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 210,
+		y: 70,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 210,
+		y: 42.5,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 210,
+		y: 15,
+		color: '#367b35',
+		width: 30,
+		height: 20
+	},
+	{
+		x: 40,
+		y: 15,
+		color: "#367b35",
+		width: 30,
+		height: 20
+	}
+	]
+
+	let gSquare = 0;
+	for (let i = 0; i &lt; greenSquares.length; i++) {
+		let object = greenSquares[i];
+		let newSquare = new GreenSquare(object.x, object.y, object.color, object.width, object.height)
+		// console.log(newSquare)
+		newSquare.render();
+	}
+
+}
+						</code>
+					</pre>
+					<p>Decide Fate function</p>
+					<pre>
+						<code>
+function decideFate () {
+
+
+	if (player.currentLocation === 7 &amp;&amp; player.previousLocation === 3) {
+		console.log('back to square 2')
+		player.newLocation = 2
+	} else if (player.currentLocation === 3 &amp;&amp; player.previousLocation === 7) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 8 &amp;&amp; player.previousLocation === 4) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 4 &amp;&amp; player.previousLocation === 8) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 12 &amp;&amp; player.previousLocation === 16) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 16 &amp;&amp; player.previousLocation === 12) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 12 &amp;&amp; player.previousLocation === 13) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 13 &amp;&amp; player.previousLocation === 12) {
+		console.log('back to square 2')
+	} else if (player.currentLocation === 13 &amp;&amp; player.previousLocation === 9) {
+		console.log('Goron Spice', player.goronSpice)
+		player.goronSpice = 1;
+	} else if (player.currentLocation === 9 &amp;&amp; player.previousLocation === 13) {
+		console.log('Goron Spice', player.goronSpice)
+		player.goronSpice = 1;
+	} else if (player.currentLocation === 10 &amp;&amp; player.previousLocation === 9) {
+		console.log('you need a triforce piece')
+	} else if (player.currentLocation === 9 &amp;&amp; player.previousLocation === 10) {
+		console.log('you need a triforce piece')
+	} else if (player.currentLocation === 18 &amp;&amp; player.previousLocation === 14) {
+		console.log('you need a triforce piece')
+	} else if (player.currentLocation === 14 &amp;&amp; player.previousLocation === 18) {
+		console.log('you need a triforce piece')
+	} else if (player.currentLocation === 19 &amp;&amp; player.previousLocation === 15) {
+		console.log('you need a triforce piece')
+		alert('WINNER')
+		location.reload();
+	} else if (player.currentLocation === 15 &amp;&amp; player.previousLocation === 19) {
+		console.log('you need a triforce piece')
+	} else if (player.currentLocation === 10) {
+		console.log('+1 Zora Spring Water')
+	} else if (player.currentLocation === 7 &amp;&amp; player.previousLocation === 11) {
+		console.log('you need a bomb')
+	} else if (player.currentLocation === 15 &amp;&amp; player.previousLocation === 16) {
+		console.log('you need a bomb')
+	} else if (player.currentLocation === 7 || player.currentLocation === 15) {
+		console.log('+1 Triforce Piece')
+	} else if (player.currentLocation === 3 &amp;&amp; player.ocarina === 1) {
+		player.triforcePiece = 1;
+	} else if (player.currentLocation === 6 &amp;&amp; player.goronSpice === 1) {
+		console.log('Bombs', player.bomb)
+		player.bomb = 1;
+	} else if (player.currentLocation === 18) {
+		console.log('Ocarina', player.ocarina)
+		player.ocarina = 1;
+	} else {
+		console.log()
+	}
+
+}
+						</code>
+					</pre>
+					<p>KEYBOARD INTERACTION LOGIC</p>
+					<p>Movement Handler function</p>
+					<pre>
+						<code>
+function movementHandler (e) {
+	console.log('movement', e.key);
+
+	switch(e.which) {
+		case 87:
+			// move hero up
+			player.y - 27 &gt;= 0 ? player.y -= 27 : null;
+			detectSquare();
+			decideFate();
+			break;
+		case 65: 
+			// move left
+			player.x - 42.5 &gt;= 0 ? player.x -= 42.5 : null;
+			detectSquare();
+			decideFate();
+			break;
+		case 83:
+			// move down
+			player.y + 27 &lt;= game.height ? player.y += 27 : null;
+			detectSquare();
+			decideFate();
+			break;
+		case 68:
+			// move right
+			player.x + 42.5 &lt;= game.width ? player.x += 42.5 : null;
+			detectSquare();
+			decideFate();
+			break;
+	}
+	console.log(player.x);
+	console.log(player.y);
+}
+						</code>
+					</pre>
+					<p>GAME PROCESSES</p>
+					<p>Game Loop function</p>
+					<pre>
+						<code>
+function gameLoop () {
+	// clear the canvas
+	ctx.clearRect(0, 0, game.width, game.height);
+	renderSquares();
+	renderBrownBridges();
+	renderBlackBridges();
+	renderYellowBridges();
+	renderBoulders();
+	redBridge.render();
+	blueCircle.render();
+	renderTriforcePieces();
+	renderBombs();
+	ocarina.render();
+	if (player.alive) { // 
+		// render shrek
+		player.render();
+		// @todo - check collision (detchHit -&gt; f)
+		// let hit = detectHit(dekuScrub, player);
+	}
+	// render hero
+	// dekuScrub.render();
+	// dekuBaba.render();
+	// skullKid.render();
+}
+						</code>
+					</pre>
+					<p>COLLISION DETECTION</p>
+					<p>Detect Square</p>
+					<pre>
+						<code>
+function detectSquare() {
+	player.previousLocation = player.currentLocation
+	console.log(squareCoordinates)
+	console.log(player.x)
+	console.log(player.y)
+	let filterLocation = squareCoordinates.filter(s => {
+		console.log(s)
+		let x = player.x
+		let y = player.y
+		if (s.x === player.x && s.y === player.y) {
+			return true;
+		} else {
+			return false;
+		}
+	})
+	let newLocation = filterLocation[0].square
+	player.currentLocation = newLocation;
+	console.log('Previous Location', player.previousLocation)
+	console.log('Current Location', player.currentLocation)
+	console.log('New Location', newLocation)
+}
+						</code>
+					</pre>
+					<p>EVENT LISTENERS</p>
+					<pre>
+						<code>
+window.addEventListener("DOMContentLoaded", (e) =&gt; {
+	player = new Player(138, 133, "white", 5, 3.5);
+	dekuScrub = new DekuScrub(50, 50, 'red', 5, 3.5); 
+	dekuBaba = new DekuBaba(100, 100, 'orange', 5, 3.5);
+	skullKid = new SkullKid(175, 100, '#524031', 5, 3.5);
+	triforcePiece = new TriforcePiece(75, 75, '#ffde59', 5, 3.5);
+	bomb = new Bomb(200, 75, '#545454', 5, 3.5);
+	ocarina = new Ocarina(223, 24, '#d6c27c', 5, 3.5);
+	greenSquare = new GreenSquare(125, 125, '#367b35', 30, 20);
+	brownBridge = new BrownBridge(131.5, 117.5, '#89683c', 17.5, 7.5);
+	blackBridge = new BlackBridge(131.5, 92.5, 'black', 17.5, 7.5);
+	yellowBridge = new YellowBridge(131.5, 67.5, 'yellow', 17.5, 7.5);
+	redBridge = new RedBridge(174.5, 62.5, 'red', 17.5, 7.5);
+	blueCircle = new BlueCircle(220, 75, '#1c85c8', 15, 10.5);
+	boulder = new Boulder(50, 100, '#a6a6a6', 10, 7);
+
+	const runGame = setInterval(gameLoop, 120);
+});
+
+document.addEventListener('keydown', movementHandler);
+						</code>
+					</pre>
+				</div>
+			</section>
             <footer id="footer" class="wrapper alt">
 				<div class="inner">
 					<ul class="menu">
